@@ -18,4 +18,4 @@ The slide deck used during the presentation is available [here](https://goo.gl/1
 
 ### GitHub
 
-Analysis scripts and data related to the project is available at [http://github.com/jdmar3/digital-hegemony](GitHub). 
+Analysis scripts and data related to the project is available at Github. [Follow us!](https://github.com/jdmar3/digital-hegemony/)
