@@ -1,0 +1,16 @@
+# Site settings
+title: Digital Cultural Hegemony
+author: John D. Martin III
+author1: Carolyn Runyon
+email: me@johndmart.in
+email1: Carolyn-Runyon@utc.edu
+description: "This project analyzes public grant funding related to digital humanities projects and its effects on access to minority cultural heritage."
+baseurl: ""
+url: "http://digital-hegemony.github.io"
+twitter_username: jdmar3
+github_username:  jdmar3
+twitter_username1: carolynfrunyon
+
+# Build settings
+markdown: kramdown
+permalink: pretty
