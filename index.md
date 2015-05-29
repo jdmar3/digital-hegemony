@@ -12,7 +12,7 @@ In this project, we examine the extent to which public funding impacts the digit
 
 This project was presented in part at [HASTAC 2015](http://sched.co/2vrQ) at Michigan State University in East Lansing, Michigan. 
 
-Check us out on the HASTAC 2015 schedule and with the following hashtags on Twitter: #s43 #hastac2015. 
+Check us out on the HASTAC 2015 schedule and with the following hashtags on Twitter: [#s43 #hastac2015](https://twitter.com/search?q=%23s43%20%23hastac2015&src=typd). 
 
 The slide deck used during the presentation is available [here](https://goo.gl/18e5zJ).
 
