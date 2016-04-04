@@ -19,6 +19,7 @@ summary(as.factor(h$Gender))
 summary(as.factor(h$Race))
 summary(as.factor(h$PIgender))
 
+
 summary(as.factor(h$PIgender))/657*100
 
 
@@ -40,7 +41,18 @@ SummaryRaceAwards <- as.data.frame(rbind(
 
 rownames(SummaryRaceAwards) <- c("Total",paste(levels(h.race$Race),sep=","))
 
-SummaryRaceAwards
+c(
+sum(h.race$Total[h.race$Race %in% "Asian"]),
+sum(h.race$Total[h.race$Race %in% "Black"]),
+sum(h.race$Total[h.race$Race %in% "Latino"]),
+sum(h.race$Total[h.race$Race %in% "Native American"]),
+sum(h.race$Total[h.race$Race %in% "Pacific Islander"]),
+sum(h.race$Total[h.race$Race %in% "White"]),
+sum(h.race$Total[h.race$Race %in% "Multiple"]),
+sum(h.race$Total[h.race$Race %in% "Other"])
+)
+
+t(SummaryRaceAwards)
 
 SummaryRaceCounts <- as.data.frame(rbind(summary(h.race$Race),round(summary(h.race$Race)/length(h.race$Race)*100,1)))
 
@@ -48,21 +60,29 @@ rownames(SummaryRaceCounts) <- c("Count","Percentage")
 
 SummaryRaceCounts
 
+sum(SummaryRaceCounts[1,])
+
 SummaryGenderAwards <- as.data.frame(rbind(summary(h.gender$Total),
-    summary(h.gender$Gender[h.gender$Gender %in% "Men"]),
-    summary(h.gender$Gender[h.gender$Gender %in% "Women"]),
-    summary(h.gender$Gender[h.gender$Gender %in% "Transgender"]),
-    summary(h.gender$Gender[h.gender$Gender %in% "Multiple"])))
+    summary(h.gender$Total[h.gender$Gender %in% "Men"]),
+    summary(h.gender$Total[h.gender$Gender %in% "Women"]),
+    summary(h.gender$Total[h.gender$Gender %in% "Transgender"]),
+    summary(h.gender$Total[h.gender$Gender %in% "Multiple"])))
 
 rownames(SummaryGenderAwards) <- c("Total",paste(levels(h.gender$Gender),sep=","))
 
 SummaryGenderAwards
 
-SummaryGenderCounts <- as.data.frame(rbind(summary(h.gender$Gender),round(summary(h.gender$Gender)/length(h.gender$Gender)*100,1)))
+sum(h.gender$Total[h.gender$Gender %in% "Men"])
+sum(h.gender$Total[h.gender$Gender %in% "Women"])
+
+# SummaryGenderCounts <- as.data.frame(rbind(summary(h.gender$Gender),round(summary(h.gender$Gender)/length(h.gender$Gender)*100,1)))
 
 rownames(SummaryGenderCounts) <- c("Count","Percentage")
 
+sum(SummaryGenderCounts[1,])
+
 SummaryGenderCounts
+
 
 SummaryPIgenderAwards <- as.data.frame(rbind(summary(h.pigender$Total),
                                              summary(h.pigender$PIgender[h.pigender$PIgender %in% "male"]),
@@ -80,6 +100,7 @@ SummaryPIgenderCounts
 
 # Make pretty pictures
 library(ggplot2)
+
 library(scales)
 
 h.race <- h[!is.na(h$Race),]
@@ -93,11 +114,11 @@ h.gender$Gender <- factor(h.gender$Gender,levels(h.gender$Gender)[c(1,4,3,2)])
 h.pigender <- h[!is.na(h$PIgender),]
 
 ggplot(h.race, aes(x = Race, y = Total)) + 
-  geom_violin(outlier.shape = NA) + 
+  geom_violin() + 
 #  coord_flip() + 
   scale_y_continuous(limits = c(0, 400000),labels = comma) +
   geom_jitter(shape=16, position=position_jitter(0.2)) +
-  stat_summary(fun.data=mean_sdl, mult=1, 
+  stat_summary(fun.data=mean_sdl, 
                geom="pointrange", color="red") +
   xlab("Racial / Ethnic Focus of Project") + ylab("Total Grant Award") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
