@@ -22,4 +22,4 @@ Analysis scripts and data related to the project is available at Github. [Follow
 
 ### Publications
 
-Martin, J. D., III, & Runyon, C. (2016). Digital humanities, digital hegemony: exploring funding practices and unequal access in the digital humanities. *ACM SIGCAS Computers and Society, 46*(1), 20–26. http://doi.org/10.1145/2908216.2908219 [[download](./Martin_and_Runyon_2016-Digital_humanities_digital_hegemony.pdf)]
+Martin, J. D., III, & Runyon, C. (2016). Digital humanities, digital hegemony: exploring funding practices and unequal access in the digital humanities. *ACM SIGCAS Computers and Society, 46*(1), 20–26. doi: [10.1145/2908216.2908219](http://doi.org/10.1145/2908216.2908219) [[download](./Martin_and_Runyon_2016-Digital_humanities_digital_hegemony.pdf)]
