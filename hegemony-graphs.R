@@ -19,10 +19,7 @@ summary(as.factor(h$Gender))
 summary(as.factor(h$Race))
 summary(as.factor(h$PIgender))
 
-
 summary(as.factor(h$PIgender))/657*100
-
-
 
 # Crosstab of Race and Gender variables
 table(as.factor(h$Gender),as.factor(h$Race))
@@ -31,6 +28,18 @@ table(as.factor(h$Gender),as.factor(h$Race))
 h$Total <- numeric(length=656)
 
 h$Total <- (as.numeric(gsub("[^0-9]","",h$AwardOutright)) + as.numeric(gsub("[^0-9]","",h$AwardMatching)) + as.numeric(gsub("[^0-9]","",h$SupplementAmount)))/100
+
+# Refactor data
+
+h.race <- h[!is.na(h$Race),]
+print(levels(h.race$Race)) 
+h.race$Race <- factor(h.race$Race,levels(h.race$Race)[c(1:3,5,7,8,4,6)])
+
+h.gender <- h[!is.na(h$Gender),]
+print(levels(h.gender$Gender))
+h.gender$Gender <- factor(h.gender$Gender,levels(h.gender$Gender)[c(1,4,3,2)])
+
+h.pigender <- h[!is.na(h$PIgender),]
 
 SummaryRaceAwards <- as.data.frame(rbind(
   summary(h.race$Total),summary(h.race$Total[h.race$Race %in% "Asian"]),summary(h.race$Total[h.race$Race %in% "Black"]),
@@ -75,7 +84,7 @@ SummaryGenderAwards
 sum(h.gender$Total[h.gender$Gender %in% "Men"])
 sum(h.gender$Total[h.gender$Gender %in% "Women"])
 
-# SummaryGenderCounts <- as.data.frame(rbind(summary(h.gender$Gender),round(summary(h.gender$Gender)/length(h.gender$Gender)*100,1)))
+SummaryGenderCounts <- as.data.frame(rbind(summary(h.gender$Gender),round(summary(h.gender$Gender)/length(h.gender$Gender)*100,1)))
 
 rownames(SummaryGenderCounts) <- c("Count","Percentage")
 
@@ -103,16 +112,6 @@ library(ggplot2)
 
 library(scales)
 
-h.race <- h[!is.na(h$Race),]
-print(levels(h.race$Race)) 
-h.race$Race <- factor(h.race$Race,levels(h.race$Race)[c(1:3,5,7,8,4,6)])
-
-h.gender <- h[!is.na(h$Gender),]
-print(levels(h.gender$Gender))
-h.gender$Gender <- factor(h.gender$Gender,levels(h.gender$Gender)[c(1,4,3,2)])
-
-h.pigender <- h[!is.na(h$PIgender),]
-
 ggplot(h.race, aes(x = Race, y = Total)) + 
   geom_violin() + 
 #  coord_flip() + 
@@ -125,7 +124,7 @@ ggplot(h.race, aes(x = Race, y = Total)) +
 
 ggsave("./plot.race.award.png", width=6, height=4, dpi=300)
 
-ggplot(h.race, aes(x = Race)) + geom_histogram() +
+ggplot(h.race, aes(x = Race)) + geom_bar() +
   xlab("Racial / Ethnic Focus of Project") + ylab("Number of Grants Awarded") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -135,13 +134,13 @@ ggplot(h.gender, aes(x = Gender, y = Total)) + geom_boxplot() +
   coord_flip() + 
   scale_y_continuous(limits = c(0, 400000),labels = comma) +
   geom_jitter(shape=16, position=position_jitter(0.2)) +
-  stat_summary(fun.data=mean_sdl, mult=1, 
+  stat_summary(fun.data=mean_sdl, #mult=1, 
                geom="pointrange", color="red") +
   xlab("Gender Focus of Project") + ylab("Total Grant Award")
 
 ggsave("./plot.gender.award.png", width=6, height=4, dpi=300)
 
-ggplot(h.gender, aes(x = Gender)) + geom_histogram() + coord_flip() +
+ggplot(h.gender, aes(x = Gender)) + geom_bar() + coord_flip() +
   xlab("Gender Focus of Project") + ylab("Number of Grants Awarded")
 
 ggsave("./plot.gender.count.png", width=6, height=4, dpi=300)
@@ -151,20 +150,20 @@ ggplot(h.pigender, aes(x = PIgender, y = Total)) + geom_violin() +
   scale_y_continuous(limits = c(0, 400000),labels = comma) +
   geom_jitter(shape=16, position=position_jitter(0.2)) +
   #geom_dotplot(binaxis='y', stackdir='center', dotsize=1) +
-  stat_summary(fun.data=mean_sdl, mult=1, 
+  stat_summary(fun.data=mean_sdl, #mult=1, 
                geom="pointrange", color="red") +
   xlab("PI Gender") + ylab("Total Grant Award")
 
 ggsave("./plot.pigender.award.png", width=6, height=4, dpi=300)
 
-ggplot(h.pigender, aes(x = PIgender)) + geom_histogram() + coord_flip() +
+ggplot(h.pigender, aes(x = PIgender)) + geom_bar() + coord_flip() +
   xlab("PI Gender") + ylab("Number of Grants Awarded")
 
 ggsave("./plot.pigender.count.png", width=6, height=4, dpi=300)
 
 print(levels(h$ProgramName))
 
-ggplot(h, aes(x = ProgramName)) + geom_histogram() + 
+ggplot(h, aes(x = ProgramName)) + geom_bar() + 
   coord_flip() +
   xlab("NEH Grant Program") + ylab("Number of Grants Awarded") 
 
